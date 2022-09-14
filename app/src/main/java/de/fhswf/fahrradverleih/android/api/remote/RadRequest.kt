@@ -26,7 +26,8 @@ class RadRequest(
 
     override fun getHeaders(): MutableMap<String, String> {
         val headers = HashMap<String, String>()
-        headers["token"] = token
+        headers["Content-Type"] = "application/json; charset=utf-8"
+        headers["Token"] = token
 
         return headers
     }
@@ -34,9 +35,6 @@ class RadRequest(
     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
         return if (response == null) {
             Response.error(VolleyError("Netzwerk-Fehler"))
-        } else if (response.statusCode != 200) {
-            Response.error(VolleyError(
-                "API-Fehler (Status ${response.statusCode})"))
         } else {
             val data = String(response.data, Charset.forName(
                 HttpHeaderParser.parseCharset(
