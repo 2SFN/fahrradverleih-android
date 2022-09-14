@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Fahrradverleih (Android)</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="startup_welcome_title">Willkommen!</string>
     <string name="login">Anmelden</string>
     <string name="startup_welcome_or">oder</string>
     <string name="register">Registrieren</string>
     <string name="password">Passwort</string>
     <string name="email_address">E-Mail Adresse</string>
+    <string name="nav_tab_map">Suchen</string>
+    <string name="nav_tab_ausleihen">Ausleihen</string>
+    <string name="nav_tab_profil">Profil</string>
 </resources>

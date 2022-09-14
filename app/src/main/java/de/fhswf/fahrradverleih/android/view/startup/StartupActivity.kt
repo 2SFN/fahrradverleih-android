@@ -1,7 +1,7 @@
 package de.fhswf.fahrradverleih.android.view.startup
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +10,7 @@ import de.fhswf.fahrradverleih.android.R
 import de.fhswf.fahrradverleih.android.view.startup.viewmodel.AuthenticationStatus
 import de.fhswf.fahrradverleih.android.view.startup.viewmodel.StartupContent
 import de.fhswf.fahrradverleih.android.view.startup.viewmodel.StartupViewModel
+import de.fhswf.fahrradverleih.android.view.tabs.TabsActivity
 
 class StartupActivity : AppCompatActivity() {
 
@@ -31,11 +32,7 @@ class StartupActivity : AppCompatActivity() {
 
         // Auf Navigationsevents reagieren
         viewModel.getAuthenticationStatus().observe(this) { status ->
-            if (status == AuthenticationStatus.AUTHENTICATED) {
-                // TODO: Navigate to another activity
-                Toast.makeText(this, "Authentication successful!", Toast.LENGTH_LONG)
-                    .show()
-            }
+            if (status == AuthenticationStatus.AUTHENTICATED) navigateAway()
         }
 
         // Erstes Event auslösen
@@ -49,6 +46,12 @@ class StartupActivity : AppCompatActivity() {
             StartupContent.REGISTER -> StartupWelcomeFragment.newInstance()
             StartupContent.WELCOME -> StartupWelcomeFragment.newInstance()
         }
+    }
+
+    private fun navigateAway() {
+        val launchIntent = Intent(this, TabsActivity::class.java)
+        startActivity(launchIntent)
+        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {
