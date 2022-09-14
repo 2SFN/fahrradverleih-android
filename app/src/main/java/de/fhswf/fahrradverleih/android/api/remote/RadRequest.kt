@@ -25,7 +25,7 @@ class RadRequest(
 ) : JsonRequest<String>(method, url, requestBody?.toString(), listener, errorListener) {
 
     override fun getHeaders(): MutableMap<String, String> {
-        val headers = super.getHeaders()
+        val headers = HashMap<String, String>()
         headers["token"] = token
 
         return headers

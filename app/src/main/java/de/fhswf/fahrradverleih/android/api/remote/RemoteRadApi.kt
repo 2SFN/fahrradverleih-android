@@ -1,10 +1,13 @@
 package de.fhswf.fahrradverleih.android.api.remote
 
+import android.content.Context
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.toolbox.Volley
 import de.fhswf.fahrradverleih.android.api.RadApi
 import de.fhswf.fahrradverleih.android.api.RadApiException
 import de.fhswf.fahrradverleih.android.model.*
+import de.fhswf.fahrradverleih.android.util.Prefs
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -21,18 +24,19 @@ import java.time.format.DateTimeFormatter
  * Verwendet Volley für HTTP-Requests.
  */
 class RemoteRadApi(
-    private val requestQueue: RequestQueue,
-    private val token: String,
+    private val context: Context,
+    private val requestQueue: RequestQueue = Volley.newRequestQueue(context),
 ) : RadApi {
 
     // TODO: Base-URL aus Environment lesen
     private val baseUrl: String = "http://10.0.0.50:3000/api"
+    private var token: String = Prefs.getString(context, Prefs.KEY_TOKEN, "")!!
 
     override fun login(
         email: String,
         secret: String,
-        onSuccess: (result: LoginResult) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: LoginResult) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.POST, "$baseUrl/benutzer/login", token,
@@ -42,7 +46,7 @@ class RemoteRadApi(
         ))
     }
 
-    override fun auth(onSuccess: () -> Void, onFailure: (e: RadApiException) -> Void) {
+    override fun auth(onSuccess: () -> Unit, onFailure: (e: RadApiException) -> Unit) {
         requestQueue.add(RadRequest(
             Request.Method.GET, "$baseUrl/benutzer/auth", token, null,
             { onSuccess() },
@@ -51,8 +55,8 @@ class RemoteRadApi(
     }
 
     override fun getBenutzer(
-        onSuccess: (result: Benutzer) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Benutzer) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.GET, "$baseUrl/benutzer/details", token, null,
@@ -63,8 +67,8 @@ class RemoteRadApi(
 
     override fun setBenutzer(
         benutzer: Benutzer,
-        onSuccess: (result: Benutzer) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Benutzer) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.POST, "$baseUrl/benutzer/details", token,
@@ -75,8 +79,8 @@ class RemoteRadApi(
     }
 
     override fun getAusleihen(
-        onSuccess: (result: List<Ausleihe>) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: List<Ausleihe>) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.GET, "$baseUrl/benutzer/ausleihen", token, null,
@@ -89,8 +93,8 @@ class RemoteRadApi(
         radId: String,
         von: LocalDateTime,
         bis: LocalDateTime,
-        onSuccess: (result: Ausleihe) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Ausleihe) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.POST, "$baseUrl/benutzer/ausleihen/neu", token,
@@ -106,8 +110,8 @@ class RemoteRadApi(
     override fun beendeAusleihe(
         ausleiheId: String,
         stationId: String,
-        onSuccess: (result: Ausleihe) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Ausleihe) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.POST, "$baseUrl/benutzer/details", token,
@@ -120,8 +124,8 @@ class RemoteRadApi(
     }
 
     override fun getStationen(
-        onSuccess: (result: List<Station>) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: List<Station>) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.GET, "$baseUrl/stationen", token, null,
@@ -132,8 +136,8 @@ class RemoteRadApi(
 
     override fun getRaeder(
         stationId: String,
-        onSuccess: (result: List<Fahrrad>) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: List<Fahrrad>) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     ) {
         requestQueue.add(RadRequest(
             Request.Method.GET, "$baseUrl/stationen/$stationId/raeder", token, null,
@@ -160,5 +164,13 @@ class RemoteRadApi(
         } catch (e: Exception) {
             throw RadApiException("Verarbeiten der Antwort fehlgeschlagen.", e)
         }
+    }
+
+    fun updateToken(token: String) {
+        // Token speichern
+        Prefs.setString(context, Prefs.KEY_TOKEN, token)
+
+        // In Instanz anwenden
+        this.token = token
     }
 }

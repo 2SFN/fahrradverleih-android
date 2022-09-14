@@ -11,49 +11,49 @@ interface RadApi {
     fun login(
         email: String,
         secret: String,
-        onSuccess: (result: LoginResult) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: LoginResult) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
-    fun auth(onSuccess: () -> Void, onFailure: (e: RadApiException) -> Void)
+    fun auth(onSuccess: () -> Unit, onFailure: (e: RadApiException) -> Unit)
 
-    fun getBenutzer(onSuccess: (result: Benutzer) -> Void, onFailure: (e: RadApiException) -> Void)
+    fun getBenutzer(onSuccess: (result: Benutzer) -> Unit, onFailure: (e: RadApiException) -> Unit)
 
     fun setBenutzer(
         benutzer: Benutzer,
-        onSuccess: (result: Benutzer) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Benutzer) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
     fun getAusleihen(
-        onSuccess: (result: List<Ausleihe>) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: List<Ausleihe>) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
     fun neueAusleihe(
         radId: String,
         von: LocalDateTime,
         bis: LocalDateTime,
-        onSuccess: (result: Ausleihe) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Ausleihe) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
     fun beendeAusleihe(
         ausleiheId: String,
         stationId: String,
-        onSuccess: (result: Ausleihe) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: Ausleihe) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
     fun getStationen(
-        onSuccess: (result: List<Station>) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: List<Station>) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
     fun getRaeder(
         stationId: String,
-        onSuccess: (result: List<Fahrrad>) -> Void,
-        onFailure: (e: RadApiException) -> Void
+        onSuccess: (result: List<Fahrrad>) -> Unit,
+        onFailure: (e: RadApiException) -> Unit
     )
 
 }
