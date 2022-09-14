@@ -19,7 +19,7 @@ class TabsViewModel : ViewModel() {
     }
 
     fun backPressed(): Boolean {
-        return this.content.value == TabsContent.MAP
+        return this.content.value != TabsContent.MAP
     }
 
 }
