@@ -88,7 +88,11 @@ class StartupViewModel(
     fun backPressed(): Boolean {
         return when (this.content.value) {
             StartupContent.AUTHENTICATION -> true
-            else -> false
+            StartupContent.WELCOME -> true
+            else -> {
+                navigateTo(StartupContent.AUTHENTICATION)
+                false
+            }
         }
     }
 

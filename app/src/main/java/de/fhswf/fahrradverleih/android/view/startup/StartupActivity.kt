@@ -2,6 +2,7 @@ package de.fhswf.fahrradverleih.android.view.startup
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +36,11 @@ class StartupActivity : AppCompatActivity() {
             if (status == AuthenticationStatus.AUTHENTICATED) navigateAway()
         }
 
+        // Eigenes Verhalten, wenn der Anwender zurück navigiert (Button/Geste)
+        onBackPressedDispatcher.addCallback(this) {
+            if (viewModel.backPressed()) finish()
+        }
+
         // Erstes Event auslösen
         viewModel.navigateTo(StartupContent.AUTHENTICATION)
     }
@@ -52,9 +58,5 @@ class StartupActivity : AppCompatActivity() {
         val launchIntent = Intent(this, TabsActivity::class.java)
         startActivity(launchIntent)
         finish()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return viewModel.backPressed()
     }
 }
