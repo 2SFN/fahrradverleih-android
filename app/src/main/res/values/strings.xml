@@ -9,4 +9,14 @@
     <string name="nav_tab_map">Suchen</string>
     <string name="nav_tab_ausleihen">Ausleihen</string>
     <string name="nav_tab_profil">Profil</string>
+    <string name="error_panel_icon_description">Fehler-Icon</string>
+    <string name="error_panel_title">Ein kritischer Fehler ist aufgetreten</string>
+    <string name="error_panel_retry_button">Erneut Versuchen</string>
+    <string name="profile_logout_button">Abmelden</string>
+    <string name="profile_apply_button">Änderungen Speichern</string>
+    <string name="profile_input_vorname">Vorname</string>
+    <string name="profile_input_nachname">Nachname</string>
+    <string name="profile_input_email">E-Mail Adresse</string>
+    <string name="profile_configure_login_button">Anmeldung Ändern</string>
+    <string name="profile_input_id">Profil ID</string>
 </resources>
