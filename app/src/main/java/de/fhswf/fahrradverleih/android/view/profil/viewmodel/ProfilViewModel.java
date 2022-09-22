@@ -15,7 +15,7 @@ public class ProfilViewModel extends ViewModel {
 
     private final RadApi api;
 
-    private final MutableLiveData<Status> status = new MutableLiveData<>(Status.FETCHING);
+    private final MutableLiveData<Status> status = new MutableLiveData<>(Status.INITIAL);
     private final MutableLiveData<Benutzer> benutzer = new MutableLiveData<>(new Benutzer());
 
     public ProfilViewModel(RadApi api) {

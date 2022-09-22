@@ -129,7 +129,9 @@ public class ProfilFragment extends Fragment {
         });
 
         /// Anfänglich: Lade Details
-        viewModel.fetchBenutzer();
+        viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
+            if(status == Status.INITIAL) viewModel.fetchBenutzer();
+        });
     }
 
     private void restartApplication() {
