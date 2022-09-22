@@ -1,4 +1,4 @@
-package de.fhswf.fahrradverleih.android.widget;
+package de.fhswf.fahrradverleih.android.widget.error_panel;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

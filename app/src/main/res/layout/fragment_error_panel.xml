@@ -9,7 +9,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:padding="32dp"
-    tools:context=".widget.ErrorPanelFragment">
+    tools:context=".widget.error_panel.ErrorPanelFragment">
 
     <ImageView
         android:layout_width="64dp"
