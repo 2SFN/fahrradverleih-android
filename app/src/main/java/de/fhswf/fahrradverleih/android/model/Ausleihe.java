@@ -78,4 +78,8 @@ public class Ausleihe {
     public void setBis(@NonNull LocalDateTime bis) {
         this.bis = bis;
     }
+
+    public boolean isAktiv() {
+        return bis.isAfter(LocalDateTime.now());
+    }
 }

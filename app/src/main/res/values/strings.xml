@@ -19,4 +19,7 @@
     <string name="profile_input_email">E-Mail Adresse</string>
     <string name="profile_configure_login_button">Anmeldung Ändern</string>
     <string name="profile_input_id">Profil ID</string>
+    <string name="item_ausleihe_icon_description">Fahrrad-Icon</string>
+    <string name="item_ausleihe_return_button">Zurückgeben</string>
+    <string name="item_end_of_list_message">Keine weiteren Elemente.</string>
 </resources>

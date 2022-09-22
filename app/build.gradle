@@ -37,6 +37,7 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.5.2'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.google.android.material:material:1.6.1'
 
     // Volley für einfache HTTP-Requests
@@ -45,6 +46,7 @@ dependencies {
     // JSON Serialization
     implementation 'com.squareup.moshi:moshi:1.14.0'
 
+    // ViewModel und LiveData
     implementation 'androidx.lifecycle:lifecycle-livedata:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
     implementation 'androidx.navigation:navigation-fragment:2.5.2'
