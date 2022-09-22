@@ -8,12 +8,16 @@ import androidx.annotation.Nullable;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.JsonReader;
+import com.squareup.moshi.JsonWriter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -54,7 +58,9 @@ public class RemoteRadApi implements RadApi {
         this.token = Prefs.getString(context, Prefs.KEY_TOKEN);
 
         // JSON Serialisierung vorbereiten
-        this.moshi = new Moshi.Builder().build();
+        this.moshi = new Moshi.Builder()
+                .add(LocalDateTime.class, new DateTimeAdapter())
+                .build();
 
         // Volley Request-Queue
         this.requestQueue = Volley.newRequestQueue(context);
@@ -196,6 +202,26 @@ public class RemoteRadApi implements RadApi {
             }
         } catch (Exception e) {
             onFailure.onFailure(new RadApiException("Ungültige Antwort.", e));
+        }
+    }
+
+    /**
+     * Adapter für {@link Moshi}, um Timestamps die in String-Form vorliegen
+     * in Objekte zu konvertieren.
+     */
+    static class DateTimeAdapter extends JsonAdapter<LocalDateTime> {
+
+        @Override
+        public LocalDateTime fromJson(JsonReader reader) throws IOException {
+            if(reader.peek() == null) return reader.nextNull();
+            String value = reader.nextString();
+            return LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME);
+        }
+
+        @Override
+        public void toJson(@NonNull JsonWriter writer, LocalDateTime value) throws IOException {
+            if(value == null) writer.nullValue();
+            else writer.value(value.format(DateTimeFormatter.ISO_DATE_TIME));
         }
     }
 }
