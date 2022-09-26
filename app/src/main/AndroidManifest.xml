@@ -20,6 +20,14 @@
         android:theme="@style/Theme.FahrradverleihAndroid"
         tools:targetApi="31">
 
+        <!--
+            Der Google Maps API Key ist in der Datei local.properties
+            abgelegt, welche nicht in Git eingecheckt ist.
+         -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
         <activity
             android:name=".view.tabs.TabsActivity"
             android:exported="false"

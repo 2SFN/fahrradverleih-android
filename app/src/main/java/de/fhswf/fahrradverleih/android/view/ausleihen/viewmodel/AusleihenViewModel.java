@@ -1,7 +1,5 @@
 package de.fhswf.fahrradverleih.android.view.ausleihen.viewmodel;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
@@ -17,7 +15,6 @@ import de.fhswf.fahrradverleih.android.api.remote.RemoteRadApi;
 import de.fhswf.fahrradverleih.android.model.Ausleihe;
 
 public class AusleihenViewModel extends ViewModel {
-    private static final String TAG = AusleihenViewModel.class.getSimpleName();
 
     @NonNull
     private final RadApi api;
@@ -47,13 +44,12 @@ public class AusleihenViewModel extends ViewModel {
      * @param changed Ob Daten geändert wurden.
      */
     public void rueckgabeAbgeschlossen(boolean changed) {
-        if(changed) fetchData();
+        if (changed) fetchData();
         else setStatus(Status.IDLE);
     }
 
     public void fetchData() {
-        if(getStatusValue() == Status.FETCHING) return;
-        Log.i(TAG, "fetchData: Fetching Data...");
+        if (getStatusValue() == Status.FETCHING) return;
 
         setStatus(Status.FETCHING);
         setAuswahl(null);
@@ -77,7 +73,6 @@ public class AusleihenViewModel extends ViewModel {
     }
 
     private void setStatus(@NonNull Status status) {
-        Log.i(TAG, "setStatus: Status is now " + status.name());
         this.status.setValue(status);
     }
 
