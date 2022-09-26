@@ -134,7 +134,7 @@ public class RemoteRadApi implements RadApi {
         try {
             post(Ausleihe.class, "/benutzer/ausleihen/ende",
                     new JSONObject()
-                            .put("ausleihe", new JSONObject().put("id", stationId))
+                            .put("ausleihe", new JSONObject().put("id", ausleiheId))
                             .put("station", new JSONObject().put("id", stationId))
             , onSuccess, onFailure);
         } catch (JSONException ignored) {
