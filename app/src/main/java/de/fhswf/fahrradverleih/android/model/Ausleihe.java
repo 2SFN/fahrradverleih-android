@@ -1,10 +1,13 @@
 package de.fhswf.fahrradverleih.android.model;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Ausleihe {
+public class Ausleihe implements Serializable {
 
     @NonNull
     private String id;

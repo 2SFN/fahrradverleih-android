@@ -1,7 +1,6 @@
 package de.fhswf.fahrradverleih.android.view.ausleihen;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.fhswf.fahrradverleih.android.R;
+import de.fhswf.fahrradverleih.android.view.ausleihe_beenden.AusleiheBeendenDialogFragment;
 import de.fhswf.fahrradverleih.android.view.ausleihen.recycler.AusleiheListItem;
 import de.fhswf.fahrradverleih.android.view.ausleihen.recycler.AusleihenAdapter;
 import de.fhswf.fahrradverleih.android.view.ausleihen.viewmodel.AusleihenViewModel;
@@ -85,15 +85,35 @@ public class AusleihenFragment extends Fragment {
 
         // Ausleihe ausgewählt
         viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            // TODO: Rückgabe-Dialog
-            new Handler().postDelayed(
-                    () -> viewModel.rueckgabeAbgeschlossen(false),
-                    1000);
+            if(status == Status.RUECKGABE) showRueckgabeModal();
         });
 
         // Anfänglich Daten abrufen
         viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
             if(status == Status.INITIAL) viewModel.fetchData();
         });
+    }
+
+    private void showRueckgabeModal() {
+        if(viewModel.getAuswahlValue() == null) return;
+
+        // Vor Anzeige des Dialogs: auf FragmentResult hören
+        getParentFragmentManager().setFragmentResultListener(
+                AusleiheBeendenDialogFragment.REQUEST_KEY, this,
+                (key, bundle) -> {
+                    // ViewModel informieren
+                    viewModel.rueckgabeAbgeschlossen(bundle.containsKey(
+                            AusleiheBeendenDialogFragment.RESULT_AUSLEIHE));
+                    // Result & Result Callback löschen
+                    getParentFragmentManager().clearFragmentResultListener(
+                            AusleiheBeendenDialogFragment.REQUEST_KEY);
+                    getParentFragmentManager().clearFragmentResult(
+                            AusleiheBeendenDialogFragment.REQUEST_KEY);
+                }
+        );
+
+        // Dialog anzeigen
+        AusleiheBeendenDialogFragment.newInstance(viewModel.getAuswahlValue())
+                .show(getParentFragmentManager(), "rueckgabe");
     }
 }

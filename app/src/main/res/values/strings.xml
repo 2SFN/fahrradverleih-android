@@ -22,4 +22,7 @@
     <string name="item_ausleihe_icon_description">Fahrrad-Icon</string>
     <string name="item_ausleihe_return_button">Zurückgeben</string>
     <string name="item_end_of_list_message">Keine weiteren Elemente.</string>
+    <string name="ausleihe_beenden_title">Rückgabestation auswählen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ausleihe_beenden_confirm">Rückgabe Bestätigen</string>
 </resources>
