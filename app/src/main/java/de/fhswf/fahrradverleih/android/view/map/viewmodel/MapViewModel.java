@@ -55,9 +55,10 @@ public class MapViewModel extends ViewModel {
         setStatus(Status.RAD_AUSWAHL);
     }
 
-    public void radSelected(@NonNull Fahrrad rad) {
+    public void radSelected(@Nullable Fahrrad rad) {
         setAuswahlRad(rad);
-        setStatus(Status.BUCHUNG);
+        if (rad != null) setStatus(Status.BUCHUNG);
+        else setStatus(Status.IDLE);
     }
 
     public MutableLiveData<Status> getStatus() {

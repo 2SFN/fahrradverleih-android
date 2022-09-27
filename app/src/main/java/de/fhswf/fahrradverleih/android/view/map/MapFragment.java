@@ -21,9 +21,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Map;
 
 import de.fhswf.fahrradverleih.android.R;
+import de.fhswf.fahrradverleih.android.model.Fahrrad;
 import de.fhswf.fahrradverleih.android.model.Station;
 import de.fhswf.fahrradverleih.android.view.map.viewmodel.MapViewModel;
-import de.fhswf.fahrradverleih.android.view.map.viewmodel.Status;
+import de.fhswf.fahrradverleih.android.view.rad_auswahl.RadAuswahlDialogFragment;
 
 /**
  * Fragment, welches die Map anzeigt und Marker für die Stationen hinzufügt.
@@ -72,13 +73,34 @@ public class MapFragment extends Fragment {
         ViewGroup errorPanel = view.findViewById(R.id.error_panel);
         mapView = view.findViewById(R.id.map);
 
+        // Status-Änderungen
         viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            if (status == Status.FAILURE) {
-                errorPanel.setVisibility(View.VISIBLE);
-                mapView.setVisibility(View.GONE);
-            } else {
-                errorPanel.setVisibility(View.GONE);
-                mapView.setVisibility(View.VISIBLE);
+            switch(status){
+                case INITIAL:
+                    // Anfänglich Daten abrufen
+                    viewModel.fetchStationen();
+                    break;
+                case PERMISSIONS_CHECK:
+                    // Runtime-Permissions abfragen (optional für Anwender-Standort auf Karte)
+                    requestLocationPermissions();
+                    break;
+                case FAILURE:
+                    // Fehler-Panel anzeigen
+                    errorPanel.setVisibility(View.VISIBLE);
+                    mapView.setVisibility(View.GONE);
+                    break;
+                case IDLE:
+                    // Fehler-Panel ausblenden
+                    errorPanel.setVisibility(View.GONE);
+                    mapView.setVisibility(View.VISIBLE);
+                    break;
+                case RAD_AUSWAHL:
+                    showRadAuswahl();
+                    break;
+                case BUCHUNG:
+                    break;
+                case BUCHUNG_OK:
+                    break;
             }
         });
 
@@ -92,17 +114,6 @@ public class MapFragment extends Fragment {
         mapView.onCreate(mapViewBundle);
 
         viewModel.getStationen().observe(getViewLifecycleOwner(), s -> setupMap());
-
-        // Anfänglich: Daten abrufen
-        viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            if (status == Status.INITIAL) viewModel.fetchStationen();
-        });
-
-        // Runtime-Permissions abfragen (optional für Anwender-Standort auf Karte)
-        viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            if (status == Status.PERMISSIONS_CHECK)
-                requestLocationPermissions();
-        });
     }
 
     /**
@@ -136,6 +147,33 @@ public class MapFragment extends Fragment {
                 return true;
             });
         });
+    }
+
+    /**
+     * Zeigt eine neue Instanz des {@link RadAuswahlDialogFragment} und verwaltet den
+     * dazugehörigen Result-Listener.
+     */
+    private void showRadAuswahl() {
+        if(viewModel.getAuswahlStationValue() == null) return;
+
+        getParentFragmentManager().setFragmentResultListener(
+                RadAuswahlDialogFragment.REQUEST_KEY, this,
+                (key, bundle) -> {
+                    // ViewModel informieren
+                    Fahrrad rad = (Fahrrad) bundle.getSerializable(
+                            RadAuswahlDialogFragment.RESULT_FAHRRAD);
+                    viewModel.radSelected(rad);
+
+                    // Result-Listener löschen
+                    getParentFragmentManager().clearFragmentResult(
+                            RadAuswahlDialogFragment.REQUEST_KEY);
+                    getParentFragmentManager().clearFragmentResultListener(
+                            RadAuswahlDialogFragment.REQUEST_KEY);
+                }
+        );
+
+        RadAuswahlDialogFragment.newInstance(viewModel.getAuswahlStationValue())
+                .show(getParentFragmentManager(), "rad_auswahl");
     }
 
     @Override

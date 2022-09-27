@@ -25,4 +25,9 @@
     <string name="ausleihe_beenden_title">Rückgabestation auswählen</string>
     <string name="cancel">Abbrechen</string>
     <string name="ausleihe_beenden_confirm">Rückgabe Bestätigen</string>
+    <string name="item_button_select">Auswählen</string>
+    <string name="rad_kategorie_verfuegbar">Verfügbar: %d</string>
+    <string name="rad_details_reservieren_button">Reservieren</string>
+    <string name="rad_details_buchen_button">Jetzt Buchen</string>
+    <string name="go_back_button">Zurück</string>
 </resources>

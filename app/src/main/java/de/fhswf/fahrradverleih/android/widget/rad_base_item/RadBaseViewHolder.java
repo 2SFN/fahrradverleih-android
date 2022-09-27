@@ -1,5 +1,6 @@
 package de.fhswf.fahrradverleih.android.widget.rad_base_item;
 
+import android.content.Context;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,5 +85,10 @@ public abstract class RadBaseViewHolder<T extends RadBaseItem> extends BaseViewH
             LayoutInflater.from(extensions.getContext())
                     .inflate(extensionLayout, extensions, true);
         }
+    }
+
+    @NonNull
+    protected Context getContext() {
+        return container.getContext();
     }
 }
