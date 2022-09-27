@@ -2,7 +2,9 @@ package de.fhswf.fahrradverleih.android.model;
 
 import androidx.annotation.NonNull;
 
-public class Fahrrad {
+import java.io.Serializable;
+
+public class Fahrrad implements Serializable {
 
     @NonNull
     private String id;

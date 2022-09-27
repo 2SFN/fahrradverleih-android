@@ -2,7 +2,9 @@ package de.fhswf.fahrradverleih.android.model;
 
 import androidx.annotation.NonNull;
 
-public class CurrencyT {
+import java.io.Serializable;
+
+public class CurrencyT implements Serializable {
 
     private int betrag;
 

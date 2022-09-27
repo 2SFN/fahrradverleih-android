@@ -2,7 +2,9 @@ package de.fhswf.fahrradverleih.android.model;
 
 import androidx.annotation.NonNull;
 
-public class FahrradTyp {
+import java.io.Serializable;
+
+public class FahrradTyp implements Serializable {
 
     @NonNull
     private String bezeichnung;
@@ -17,6 +19,21 @@ public class FahrradTyp {
 
     public FahrradTyp() {
         this("", new TarifT());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FahrradTyp)) return false;
+
+        FahrradTyp that = (FahrradTyp) o;
+
+        return bezeichnung.equals(that.bezeichnung);
+    }
+
+    @Override
+    public int hashCode() {
+        return bezeichnung.hashCode();
     }
 
     @NonNull

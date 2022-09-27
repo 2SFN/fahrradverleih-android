@@ -1,6 +1,8 @@
 package de.fhswf.fahrradverleih.android.model;
 
-public class GeopositionT {
+import java.io.Serializable;
+
+public class GeopositionT implements Serializable {
 
     private double breite;
     private double laenge;

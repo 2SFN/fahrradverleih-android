@@ -2,7 +2,9 @@ package de.fhswf.fahrradverleih.android.model;
 
 import androidx.annotation.NonNull;
 
-public class TarifT {
+import java.io.Serializable;
+
+public class TarifT implements Serializable {
 
     @NonNull
     private CurrencyT preis;
