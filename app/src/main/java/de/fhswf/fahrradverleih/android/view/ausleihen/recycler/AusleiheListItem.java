@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import de.fhswf.fahrradverleih.android.model.Ausleihe;
+import de.fhswf.fahrradverleih.android.model.FahrradTyp;
+import de.fhswf.fahrradverleih.android.widget.rad_base_item.RadBaseItem;
 import de.fhswf.fahrradverleih.android.widget.recycler.BaseItem;
 
 /**
@@ -11,7 +13,7 @@ import de.fhswf.fahrradverleih.android.widget.recycler.BaseItem;
  *
  * @see AusleihenAdapter Adapter.
  */
-public class AusleiheListItem implements BaseItem {
+public class AusleiheListItem extends RadBaseItem {
     public static final int ADAPTER_TYPE = 47;
 
     @NonNull
@@ -39,6 +41,12 @@ public class AusleiheListItem implements BaseItem {
     @Override
     public int getAdapterType() {
         return ADAPTER_TYPE;
+    }
+
+    @NonNull
+    @Override
+    protected FahrradTyp getFahrradTyp() {
+        return ausleihe.getFahrrad().getTyp();
     }
 
     public interface OnRueckgabeListener {

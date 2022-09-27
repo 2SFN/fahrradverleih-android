@@ -1,10 +1,8 @@
 package de.fhswf.fahrradverleih.android.view.ausleihen.recycler;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
 import java.time.LocalDateTime;
@@ -16,27 +14,21 @@ import java.util.Locale;
 import de.fhswf.fahrradverleih.android.R;
 import de.fhswf.fahrradverleih.android.model.Ausleihe;
 import de.fhswf.fahrradverleih.android.model.TarifT;
-import de.fhswf.fahrradverleih.android.util.RadIconUtil;
-import de.fhswf.fahrradverleih.android.widget.recycler.BaseViewHolder;
+import de.fhswf.fahrradverleih.android.widget.rad_base_item.RadBaseViewHolder;
 
-public class AusleiheViewHolder extends BaseViewHolder<AusleiheListItem> {
-    @LayoutRes
-    public static final int LAYOUT = R.layout.item_ausleihe;
+public class AusleiheViewHolder extends RadBaseViewHolder<AusleiheListItem> {
 
     public AusleiheViewHolder(@NonNull View itemView) {
-        super(itemView);
+        super(itemView, R.layout.item_ausleihe);
     }
 
     @Override
     public void onBind(@NonNull AusleiheListItem item) {
+        super.onBind(item);
+
         final Ausleihe a = item.getAusleihe();
 
-        // Rad-Icon
-        ((ImageView) findViewById(R.id.icon)).setImageResource(
-                RadIconUtil.iconFor(a.getFahrrad().getTyp()));
-
         // Labels
-        ((TextView) findViewById(R.id.title)).setText(a.getFahrrad().getTyp().getBezeichnung());
         ((TextView) findViewById(R.id.tarif)).setText(getTarifInfo(a));
         ((TextView) findViewById(R.id.id_info)).setText(a.getFahrrad().getId());
         ((TextView) findViewById(R.id.rueckgabe_info)).setText(getRueckgabeInfo(a));
