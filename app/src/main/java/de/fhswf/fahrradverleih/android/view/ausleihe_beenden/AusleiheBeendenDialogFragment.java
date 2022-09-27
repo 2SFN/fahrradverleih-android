@@ -1,6 +1,5 @@
 package de.fhswf.fahrradverleih.android.view.ausleihe_beenden;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
@@ -21,8 +19,9 @@ import de.fhswf.fahrradverleih.android.R;
 import de.fhswf.fahrradverleih.android.model.Ausleihe;
 import de.fhswf.fahrradverleih.android.model.Station;
 import de.fhswf.fahrradverleih.android.view.ausleihe_beenden.viewmodel.AusleiheBeendenViewModel;
+import de.fhswf.fahrradverleih.android.widget.FullscreenDialogFragment;
 
-public class AusleiheBeendenDialogFragment extends DialogFragment {
+public class AusleiheBeendenDialogFragment extends FullscreenDialogFragment {
     /**
      * Schlüssel für den {@link androidx.fragment.app.FragmentManager}, um Callbacks
      * mit Results zu identifizieren.
@@ -63,9 +62,6 @@ public class AusleiheBeendenDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Eigenes Theme für Fullscreen-Dialog
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FahrradverleihAndroid_FullscreenDialog);
-
         // ViewModel-Instanz
         this.viewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(
                 AusleiheBeendenViewModel.initializer)).get(AusleiheBeendenViewModel.class);
@@ -74,23 +70,6 @@ public class AusleiheBeendenDialogFragment extends DialogFragment {
         if (getArguments() != null) {
             var ausleihe = (Ausleihe) getArguments().getSerializable(ARG_AUSLEIHE);
             viewModel.setAusleihe(ausleihe);
-        }
-
-        // Um sicherzustellen, dass der Dialog immer ein Fragment Result an den Manager
-        // weitergibt, wird das normale Schließen hier verhindert (Zurück-Geste/Button)
-        setCancelable(false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // Größe des Dialogs auf Bildschirmgröße anpassen
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            dialog.getWindow().setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
         }
     }
 
