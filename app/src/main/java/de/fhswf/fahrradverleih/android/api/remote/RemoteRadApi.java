@@ -117,7 +117,7 @@ public class RemoteRadApi implements RadApi {
                              @NonNull OnSuccess<Ausleihe> onSuccess,
                              @NonNull OnFailure onFailure) {
         try {
-            post(Ausleihe.class, "benutzer/ausleihen/neu",
+            post(Ausleihe.class, "/benutzer/ausleihen/neu",
                     new JSONObject()
                             .put("fahrrad", new JSONObject().put("id", radId))
                             .put("von", von.format(DateTimeFormatter.ISO_DATE_TIME))

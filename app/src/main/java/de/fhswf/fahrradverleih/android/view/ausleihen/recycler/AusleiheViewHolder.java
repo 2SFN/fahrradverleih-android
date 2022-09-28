@@ -1,6 +1,7 @@
 package de.fhswf.fahrradverleih.android.view.ausleihen.recycler;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,9 @@ public class AusleiheViewHolder extends RadBaseViewHolder<AusleiheListItem> {
         ((TextView) findViewById(R.id.rueckgabe_info)).setText(getRueckgabeInfo(a));
 
         // Rückgabe-Button
-        findViewById(R.id.rueckgabe_button).setOnClickListener(v -> {
+        Button rueckgabe = findViewById(R.id.rueckgabe_button);
+        rueckgabe.setVisibility(item.getAusleihe().isAktiv() ? View.VISIBLE : View.GONE);
+        rueckgabe.setOnClickListener(v -> {
             if (item.getOnRueckgabeListener() != null)
                 item.getOnRueckgabeListener().onRueckgabe(a);
         });
