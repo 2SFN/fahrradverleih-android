@@ -18,7 +18,7 @@
     </style>
 
     <!-- Style für die Fullscreen-Dialoge -->
-    <style name="Theme.FahrradverleihAndroid.FullscreenDialog" parent="Theme.MaterialComponents.Dialog">
+    <style name="Theme.FahrradverleihAndroid.FullscreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@color/white</item>
     </style>

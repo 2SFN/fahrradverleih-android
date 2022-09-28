@@ -61,6 +61,11 @@ public class MapViewModel extends ViewModel {
         else setStatus(Status.IDLE);
     }
 
+    public void buchungBeendet(boolean changes) {
+        setStatus(Status.BUCHUNG_OK);
+        fetchStationen();
+    }
+
     public MutableLiveData<Status> getStatus() {
         return status;
     }

@@ -30,4 +30,13 @@
     <string name="rad_details_reservieren_button">Reservieren</string>
     <string name="rad_details_buchen_button">Jetzt Buchen</string>
     <string name="go_back_button">Zurück</string>
+    <string name="neue_ausleihe_subtitle">Fahrrad buchen</string>
+    <string name="neue_ausleihe_buchung_button">Buchung Bestätigen</string>
+    <string name="neue_ausleihe_dauer_label">Rad ausleihen für</string>
+    <string name="neue_ausleihe_dauer_unit_label">h</string>
+    <string name="neue_ausleihe_button_minus">−</string>
+    <string name="neue_ausleihe_button_plus">+</string>
+    <string name="rad_auswahl_subtitle_typ">Radtyp auswählen</string>
+    <string name="rad_auswahl_subtitle_rad">Fahrrad auswählen</string>
+    <string name="neue_ausleihe_error_message">Ein Fehler ist aufgetreten</string>
 </resources>

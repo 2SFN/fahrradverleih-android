@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import de.fhswf.fahrradverleih.android.R;
 import de.fhswf.fahrradverleih.android.model.Fahrrad;
 import de.fhswf.fahrradverleih.android.model.Station;
 import de.fhswf.fahrradverleih.android.view.map.viewmodel.MapViewModel;
+import de.fhswf.fahrradverleih.android.view.neue_ausleihe.NeueAusleiheDialogFragment;
 import de.fhswf.fahrradverleih.android.view.rad_auswahl.RadAuswahlDialogFragment;
 
 /**
@@ -75,7 +77,7 @@ public class MapFragment extends Fragment {
 
         // Status-Änderungen
         viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            switch(status){
+            switch (status) {
                 case INITIAL:
                     // Anfänglich Daten abrufen
                     viewModel.fetchStationen();
@@ -98,8 +100,10 @@ public class MapFragment extends Fragment {
                     showRadAuswahl();
                     break;
                 case BUCHUNG:
+                    showBuchenDialog();
                     break;
                 case BUCHUNG_OK:
+                    Snackbar.make(view, "Buchung erfolgreich!", Snackbar.LENGTH_LONG).show();
                     break;
             }
         });
@@ -154,7 +158,7 @@ public class MapFragment extends Fragment {
      * dazugehörigen Result-Listener.
      */
     private void showRadAuswahl() {
-        if(viewModel.getAuswahlStationValue() == null) return;
+        if (viewModel.getAuswahlStationValue() == null) return;
 
         getParentFragmentManager().setFragmentResultListener(
                 RadAuswahlDialogFragment.REQUEST_KEY, this,
@@ -174,6 +178,31 @@ public class MapFragment extends Fragment {
 
         RadAuswahlDialogFragment.newInstance(viewModel.getAuswahlStationValue())
                 .show(getParentFragmentManager(), "rad_auswahl");
+    }
+
+    private void showBuchenDialog() {
+        if (viewModel.getAuswahlStationValue() == null ||
+                viewModel.getAuswahlRadValue() == null) return;
+
+        getParentFragmentManager().setFragmentResultListener(
+                NeueAusleiheDialogFragment.REQUEST_KEY, this,
+                (key, bundle) -> {
+                    // ViewModel informieren
+                    viewModel.buchungBeendet(bundle.containsKey(
+                            NeueAusleiheDialogFragment.RESULT_AUSLEIHE));
+
+                    // Result-Listener löschen
+                    getParentFragmentManager().clearFragmentResult(
+                            NeueAusleiheDialogFragment.REQUEST_KEY);
+                    getParentFragmentManager().clearFragmentResultListener(
+                            NeueAusleiheDialogFragment.REQUEST_KEY);
+                }
+        );
+
+        NeueAusleiheDialogFragment.newInstance(
+                        viewModel.getAuswahlStationValue(),
+                        viewModel.getAuswahlRadValue())
+                .show(getParentFragmentManager(), "buchung");
     }
 
     @Override

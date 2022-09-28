@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,21 +90,38 @@ public class RadAuswahlDialogFragment extends FullscreenDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Toolbar toolbar = view.findViewById(R.id.dialog_toolbar);
+
         // Reagiere auf Status-Änderungen
         viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            // Inhalt
+            // Inhalt des RecyclerViews aktualisieren
             refreshRecycler();
 
-            if(status == Status.DONE) {
-                // Fragment Result setzen
-                Bundle result = new Bundle();
-                result.putSerializable(RESULT_FAHRRAD, viewModel.getAuswahlRadValue());
-                getParentFragmentManager().setFragmentResult(REQUEST_KEY, result);
-                dismiss();
-            } else if(status == Status.CANCELLED) {
-                // Leeres Result
-                getParentFragmentManager().setFragmentResult(REQUEST_KEY, new Bundle());
-                dismiss();
+            switch (status) {
+                case INITIAL:
+                    // Anfänglich Daten abrufen
+                    viewModel.fetchData();
+                    break;
+                case CANCELLED:
+                    // Leeres Result
+                    getParentFragmentManager().setFragmentResult(REQUEST_KEY, new Bundle());
+                    dismiss();
+                    break;
+                case DONE:
+                    // Fragment Result setzen
+                    Bundle result = new Bundle();
+                    result.putSerializable(RESULT_FAHRRAD, viewModel.getAuswahlRadValue());
+                    getParentFragmentManager().setFragmentResult(REQUEST_KEY, result);
+                    dismiss();
+                    break;
+                case AUSWAHL_TYP:
+                    toolbar.setTitle(viewModel.getStationValue().getBezeichnung());
+                    toolbar.setSubtitle(R.string.rad_auswahl_subtitle_typ);
+                    break;
+                case AUSWAHL_RAD:
+                    toolbar.setTitle(viewModel.getStationValue().getBezeichnung());
+                    toolbar.setSubtitle(R.string.rad_auswahl_subtitle_rad);
+                    break;
             }
         });
 
@@ -114,11 +132,6 @@ public class RadAuswahlDialogFragment extends FullscreenDialogFragment {
 
         // Zurück Button
         view.findViewById(R.id.back).setOnClickListener(v -> viewModel.navigateBack());
-
-        // Anfänglich Daten abrufen
-        viewModel.getStatus().observe(getViewLifecycleOwner(), status -> {
-            if(status == Status.INITIAL) viewModel.fetchData();
-        });
     }
 
     /**
