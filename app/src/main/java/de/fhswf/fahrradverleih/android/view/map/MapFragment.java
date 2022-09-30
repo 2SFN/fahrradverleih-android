@@ -243,7 +243,8 @@ public class MapFragment extends Fragment {
     private void handlePermissionsResult(Map<String, Boolean> results) {
         viewModel.permissionsCheckFinished();
         if (Boolean.TRUE.equals(results.getOrDefault(
-                Manifest.permission.ACCESS_FINE_LOCATION, false)))
+                Manifest.permission.ACCESS_FINE_LOCATION, false))) {
             mapView.getMapAsync(map -> map.setMyLocationEnabled(true));
+        }
     }
 }
