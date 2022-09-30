@@ -24,6 +24,7 @@ public class StartupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_FahrradverleihAndroid_StartupBase);
         setContentView(R.layout.activity_startup);
         setSupportActionBar(((Toolbar) findViewById(R.id.toolbar)));
 

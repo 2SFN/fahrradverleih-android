@@ -5,31 +5,42 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
+    tools:background="#a000"
     tools:context=".view.startup.StartupWelcomeFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:textStyle="normal"
         android:gravity="center"
         android:text="@string/startup_welcome_title" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Theme.FahrradverleihAndroid.StartupButton"
         android:id="@+id/login"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:layout_marginTop="16dp"
         android:text="@string/login"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/startup_welcome_or"
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        style="@style/Theme.FahrradverleihAndroid.StartupButton"
         android:id="@+id/register"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:layout_marginTop="8dp"
         android:text="@string/register"
         />
 
