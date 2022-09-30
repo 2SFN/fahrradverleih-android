@@ -39,4 +39,7 @@
     <string name="rad_auswahl_subtitle_typ">Radtyp auswählen</string>
     <string name="rad_auswahl_subtitle_rad">Fahrrad auswählen</string>
     <string name="neue_ausleihe_error_message">Ein Fehler ist aufgetreten</string>
+    <string name="app_title">Fahrradverleih</string>
+    <string name="monheim_am_rhein">Monheim am Rhein</string>
+    <string name="startup_toolbar_logo_description">Monheim am Rhein Logo</string>
 </resources>

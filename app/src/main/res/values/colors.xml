@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="brand_primary">#0297DC</color>
     <color name="brand_primary_dark">#0297DC</color>
+    <color name="brand_primary_translucent">#440297DC</color>
     <color name="transparent">#00000000</color>
 </resources>

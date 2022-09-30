@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Wrapper für das Monheim SVG-Logo (für zusätzliches Padding) -->
+    <item
+        android:drawable="@drawable/ic_monheim"
+        android:start="4dp"
+        android:end="20dp"
+        android:top="12dp"
+        android:bottom="12dp"
+        />
+
+</layer-list>
