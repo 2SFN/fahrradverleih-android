@@ -37,12 +37,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            style="@style/Theme.FahrradverleihAndroid.SecondaryButton"
             android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/cancel" />
 
         <Button
+            style="@style/Theme.FahrradverleihAndroid.PrimaryButton"
             android:id="@+id/confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +63,9 @@
 
         <RadioGroup
             android:id="@+id/radio_container"
+            android:layout_marginTop="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

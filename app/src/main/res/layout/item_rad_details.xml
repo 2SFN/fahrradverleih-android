@@ -15,12 +15,14 @@
     <TextView
         android:id="@+id/id_info"
         tools:text="ID: R-0003"
+        android:layout_marginTop="@dimen/rad_item_info_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/reservieren"
         android:text="@string/rad_details_reservieren_button"
+        android:layout_marginTop="@dimen/rad_item_info_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

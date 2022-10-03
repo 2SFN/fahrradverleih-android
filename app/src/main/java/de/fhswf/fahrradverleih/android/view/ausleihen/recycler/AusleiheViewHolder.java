@@ -31,7 +31,7 @@ public class AusleiheViewHolder extends RadBaseViewHolder<AusleiheListItem> {
 
         // Labels
         ((TextView) findViewById(R.id.tarif)).setText(getTarifInfo(a));
-        ((TextView) findViewById(R.id.id_info)).setText(a.getFahrrad().getId());
+        ((TextView) findViewById(R.id.id_info)).setText(getIdInfo(a));
         ((TextView) findViewById(R.id.rueckgabe_info)).setText(getRueckgabeInfo(a));
 
         // Rückgabe-Button
@@ -63,5 +63,9 @@ public class AusleiheViewHolder extends RadBaseViewHolder<AusleiheListItem> {
             return String.format(Locale.GERMANY, "Zurückgegeben am %s",
                     bis.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
         }
+    }
+
+    private String getIdInfo(@NonNull Ausleihe ausleihe) {
+        return String.format("ID: %s", ausleihe.getFahrrad().getId());
     }
 }

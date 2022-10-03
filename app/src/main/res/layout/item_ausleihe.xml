@@ -12,15 +12,18 @@
         android:id="@+id/id_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rad_item_info_margin"
         tools:text="ID: R0002" />
 
     <TextView
         android:id="@+id/rueckgabe_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rad_item_info_margin"
         tools:text="Zurückgegeben am 21.09.2022" />
 
     <Button
+        style="@style/Theme.FahrradverleihAndroid.PrimaryButton"
         android:id="@+id/rueckgabe_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
