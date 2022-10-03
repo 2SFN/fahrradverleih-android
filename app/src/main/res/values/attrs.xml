@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="IconInputView">
+        <attr name="icon" format="reference" />
+        <attr name="label" format="string|reference" />
+        <attr name="inputType">
+            <enum name="email" value="32" />
+            <enum name="name" value="96" />
+            <enum name="none" value="0" />
+        </attr>
+        <attr name="readonly" format="boolean" />
+    </declare-styleable>
+
+</resources>

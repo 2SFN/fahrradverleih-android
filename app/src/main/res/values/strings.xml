@@ -44,4 +44,5 @@
     <string name="startup_toolbar_logo_description">Monheim am Rhein Logo</string>
     <string name="login_email_icon_description">E-Mail Icon</string>
     <string name="login_password_icon_description">Passwort Icon</string>
+    <string name="view_icon_input_icon_description">Eingabefeld Icon</string>
 </resources>

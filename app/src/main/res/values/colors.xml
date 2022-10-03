@@ -11,4 +11,6 @@
     <color name="brand_primary_dark">#0297DC</color>
     <color name="brand_primary_translucent">#440297DC</color>
     <color name="transparent">#00000000</color>
+    <color name="grey">#939393</color>
+    <color name="danger">#eb445a</color>
 </resources>

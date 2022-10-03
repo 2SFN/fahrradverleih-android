@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +20,7 @@ import de.fhswf.fahrradverleih.android.util.SimpleTextWatcher;
 import de.fhswf.fahrradverleih.android.view.profil.viewmodel.ProfilViewModel;
 import de.fhswf.fahrradverleih.android.view.profil.viewmodel.Status;
 import de.fhswf.fahrradverleih.android.view.startup.StartupActivity;
+import de.fhswf.fahrradverleih.android.widget.IconInputView;
 
 public class ProfilFragment extends Fragment {
 
@@ -76,10 +75,10 @@ public class ProfilFragment extends Fragment {
                 enableWhenIdle.forEach(v -> v.setEnabled(status == Status.IDLE)));
 
         // Form Inputs konfigurieren, Vorname:
-        TextInputEditText vornameInput = view.findViewById(R.id.vorname_input);
+        IconInputView vornameInput = view.findViewById(R.id.vorname_input);
 
         // I. Aktualisiere das ViewModel bei Änderungen
-        vornameInput.addTextChangedListener(new SimpleTextWatcher(
+        vornameInput.addTextWatcher(new SimpleTextWatcher(
                 t -> viewModel.getBenutzerValue().setVorname(t)));
 
         // II. Übernehme neuen Wert, sobald der Benutzer im VM sich ändert
@@ -90,16 +89,16 @@ public class ProfilFragment extends Fragment {
         enableWhenIdle.add(vornameInput);
 
         // Nachname
-        TextInputEditText nachnameInput = view.findViewById(R.id.nachname_input);
-        nachnameInput.addTextChangedListener(new SimpleTextWatcher(
+        IconInputView nachnameInput = view.findViewById(R.id.nachname_input);
+        nachnameInput.addTextWatcher(new SimpleTextWatcher(
                 t -> viewModel.getBenutzerValue().setName(t)));
         viewModel.getBenutzer().observe(getViewLifecycleOwner(),
                 benutzer -> nachnameInput.setText(benutzer.getName()));
         enableWhenIdle.add(nachnameInput);
 
         // E-Mail Adresse
-        TextInputEditText emailInput = view.findViewById(R.id.email_input);
-        emailInput.addTextChangedListener(new SimpleTextWatcher(
+        IconInputView emailInput = view.findViewById(R.id.email_input);
+        emailInput.addTextWatcher(new SimpleTextWatcher(
                 t -> viewModel.getBenutzerValue().setEmail(t)));
         viewModel.getBenutzer().observe(getViewLifecycleOwner(),
                 benutzer -> emailInput.setText(benutzer.getEmail()));
@@ -109,7 +108,7 @@ public class ProfilFragment extends Fragment {
         enableWhenIdle.add(view.findViewById(R.id.configure_login));
 
         // Profil-ID: Read only; nur Daten aktualisieren
-        TextInputEditText idInput = view.findViewById(R.id.id_input);
+        IconInputView idInput = view.findViewById(R.id.id_input);
         viewModel.getBenutzer().observe(getViewLifecycleOwner(),
                 benutzer -> idInput.setText(benutzer.getId()));
 
