@@ -27,5 +27,6 @@
         android:id="@+id/rueckgabe_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bottom_buttons_gap"
         android:text="@string/item_ausleihe_return_button" />
 </merge>

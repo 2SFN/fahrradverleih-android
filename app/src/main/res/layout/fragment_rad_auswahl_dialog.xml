@@ -16,12 +16,13 @@
         app:layout_constraintEnd_toEndOf="parent" >
 
         <androidx.appcompat.widget.Toolbar
+            style="@style/Theme.FahrradverleihAndroid.FullscreenDialog.ActionBar"
             android:id="@+id/dialog_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            tools:title="Fahrrad auswählen"
-            tools:subtitle="Rad-ID: R0003" />
+            app:logo="@drawable/ic_location"
+            tools:title="Lichtenberger Straße"
+            tools:subtitle="Fahrrad auswählen" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,13 +31,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:layout_marginStart="@dimen/bottom_buttons_margin"
+        android:layout_marginEnd="@dimen/bottom_buttons_margin"
+        android:layout_marginBottom="@dimen/bottom_buttons_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            style="@style/Theme.FahrradverleihAndroid.SecondaryButton"
             android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

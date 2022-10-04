@@ -62,7 +62,10 @@ public class MapViewModel extends ViewModel {
     }
 
     public void buchungBeendet(boolean changes) {
-        setStatus(Status.BUCHUNG_OK);
+        if(changes) {
+            setStatus(Status.BUCHUNG_OK);
+        }
+
         fetchStationen();
     }
 

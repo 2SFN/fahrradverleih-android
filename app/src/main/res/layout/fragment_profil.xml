@@ -17,6 +17,7 @@
         >
 
         <androidx.appcompat.widget.Toolbar
+            style="@style/Theme.FahrradverleihAndroid.ActionBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="Mein Profil"
@@ -51,8 +52,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:layout_marginStart="@dimen/bottom_buttons_margin"
+            android:layout_marginEnd="@dimen/bottom_buttons_margin"
+            android:layout_marginBottom="@dimen/bottom_buttons_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -69,6 +71,7 @@
                 android:id="@+id/apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_buttons_gap"
                 android:text="@string/profile_apply_button" />
 
         </LinearLayout>

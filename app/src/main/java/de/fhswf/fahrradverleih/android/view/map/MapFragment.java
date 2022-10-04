@@ -1,5 +1,7 @@
 package de.fhswf.fahrradverleih.android.view.map;
 
+import static de.fhswf.fahrradverleih.android.util.DimenUtil.dp2px;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,13 +13,18 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.util.Map;
 
@@ -40,6 +47,7 @@ public class MapFragment extends Fragment {
     private MapViewModel viewModel;
     private ActivityResultLauncher<String[]> permissionsLauncher;
     private MapView mapView;
+    private IconGenerator iconGenerator;
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -125,6 +133,7 @@ public class MapFragment extends Fragment {
      * <p>
      * Einige weitere Schlüssel des MapViews sind außerdem direkt im Layout konfiguriert.
      */
+    @SuppressLint("PotentialBehaviorOverride")
     private void setupMap() {
         if (getView() == null) return;
         MapView mapView = getView().findViewById(R.id.map);
@@ -136,6 +145,7 @@ public class MapFragment extends Fragment {
                 var pos = new LatLng(s.getPosition().getBreite(), s.getPosition().getLaenge());
                 var marker = map.addMarker(
                         new MarkerOptions()
+                                .icon(generateIcon(String.valueOf(s.getVerfuegbar())))
                                 .draggable(false)
                                 .alpha(1.0f)
                                 .position(pos)
@@ -150,6 +160,15 @@ public class MapFragment extends Fragment {
                     viewModel.stationSelected((Station) marker.getTag());
                 return true;
             });
+
+            // Map Style anwenden
+            // s. https://developers.google.com/maps/documentation/android-sdk/styling
+            try {
+                map.setMapStyle(MapStyleOptions.loadRawResourceStyle(
+                        requireContext(), R.raw.map_style));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -217,6 +236,32 @@ public class MapFragment extends Fragment {
         }
 
         mapView.onSaveInstanceState(mapViewBundle);
+    }
+
+    /**
+     * Generiert ein Marker-Icon für eine Station.
+     *
+     * @param label Label (Anzahl verfügbarer Räder).
+     * @return Icon im {@link BitmapDescriptor} Format.
+     */
+    private BitmapDescriptor generateIcon(String label) {
+        if(this.iconGenerator == null) {
+            // Einmalige Konfiguration des IconGenerators
+            this.iconGenerator = new IconGenerator(requireContext());
+            iconGenerator.setBackground(ResourcesCompat.getDrawable(
+                    getResources(), R.drawable.marker_embed, null));
+            iconGenerator.setTextAppearance(
+                    R.style.Theme_FahrradverleihAndroid_MarkerTextAppearance);
+
+            // Padding zur Positionierung des Texts innerhalb des Marker-Icons
+            int left = dp2px(getResources(), 18);
+            int top = dp2px(getResources(), 8);
+            int right = dp2px(getResources(), 10);
+            int bottom = dp2px(getResources(), 20);
+            iconGenerator.setContentPadding(left, top, right, bottom);
+        }
+
+        return BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon(label));
     }
 
     /**

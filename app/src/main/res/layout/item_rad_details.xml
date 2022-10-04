@@ -20,15 +20,18 @@
         android:layout_height="wrap_content" />
 
     <Button
+        style="@style/Theme.FahrradverleihAndroid.PrimaryButton"
         android:id="@+id/reservieren"
         android:text="@string/rad_details_reservieren_button"
-        android:layout_marginTop="@dimen/rad_item_info_margin"
+        android:layout_marginTop="@dimen/bottom_buttons_gap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
+        style="@style/Theme.FahrradverleihAndroid.PrimaryButton"
         android:id="@+id/buchen"
         android:text="@string/rad_details_buchen_button"
+        android:layout_marginTop="@dimen/bottom_buttons_gap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
