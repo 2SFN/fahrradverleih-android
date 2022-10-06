@@ -4,6 +4,11 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+// Liest die 'local.properties' als Properties ein, um Umgebungsvariablen
+// hieraus verwenden zu können (s. android > defaultConfig)
+Properties props = new Properties()
+props.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     compileSdk 33
 
@@ -15,6 +20,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Lese die URL der Rad-API aus den Umgebungsvariablen und stelle den
+        // Wert in der App als String-Ressource zur Verfügung (R.string.[...])
+        resValue "string", "rad_api_url", props.getProperty("RAD_API_URL", "")
     }
 
     buildTypes {

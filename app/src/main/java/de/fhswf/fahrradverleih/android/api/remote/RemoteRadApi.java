@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import de.fhswf.fahrradverleih.android.R;
 import de.fhswf.fahrradverleih.android.api.OnFailure;
 import de.fhswf.fahrradverleih.android.api.OnSuccess;
 import de.fhswf.fahrradverleih.android.api.RadApi;
@@ -35,15 +36,15 @@ import de.fhswf.fahrradverleih.android.model.Station;
 import de.fhswf.fahrradverleih.android.util.Prefs;
 
 public class RemoteRadApi implements RadApi {
-    // TODO: Base-URL aus .env lesen
-    private static final String BASE_URL = "http://10.0.0.50:3000/api";
-
     // Wrapper für kürzeren Zugriff auf Methoden
     private static final int POST = Request.Method.POST;
     private static final int GET = Request.Method.GET;
 
     @NonNull
     private final Context context;
+
+    @NonNull
+    private final String baseUrl;
 
     @Nullable
     private String token;
@@ -53,6 +54,9 @@ public class RemoteRadApi implements RadApi {
 
     public RemoteRadApi(@NonNull Context context) {
         this.context = context;
+
+        // API-URL aus Ressourcen lesen (s. build-script)
+        this.baseUrl = context.getString(R.string.rad_api_url);
 
         // Token aus Prefs lesen
         this.token = Prefs.getString(context, Prefs.KEY_TOKEN);
@@ -174,7 +178,7 @@ public class RemoteRadApi implements RadApi {
                          @NonNull OnSuccess<T> onSuccess,
                          @NonNull OnFailure onFailure) {
         requestQueue.add(new RadRequest(
-                GET, BASE_URL + path, token, args,
+                GET, baseUrl + path, token, args,
                 response -> process(type, response, onSuccess, onFailure),
                 new RadApiFailureListener(onFailure)
         ));
@@ -185,7 +189,7 @@ public class RemoteRadApi implements RadApi {
                           @NonNull OnSuccess<T> onSuccess,
                           @NonNull OnFailure onFailure) {
         requestQueue.add(new RadRequest(
-                POST, BASE_URL + path, token, args,
+                POST, baseUrl + path, token, args,
                 response -> process(type, response, onSuccess, onFailure),
                 new RadApiFailureListener(onFailure)
         ));
